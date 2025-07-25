@@ -1,38 +1,13 @@
 <?php
-require_once './models/UserModel.php';
+require_once 'models/UserModel.php';
 
 class UserController
 {
-    protected $userModel;
+    private $userModel;
 
     public function __construct()
     {
         $this->userModel = new UserModel();
-    }
-
-    public function login()
-    {
-        $error = '';
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $email    = $_POST['email'];
-            $password = $_POST['password'];
-            $user     = $this->userModel->login($email);
-
-            // So sánh mật khẩu trực tiếp, không mã hóa
-            if ($user && $password === $user['password']) {
-                $_SESSION['user'] = $user;
-                if ($user['role'] === 'admin') {
-             header('Location: ' . BASE_URL . 'index.php?action=admin_dashboard');
-            } else {
-            header('Location: ' . BASE_URL . 'index.php');
-            }
-                exit;
-            } else {
-                $error = "Email hoặc mật khẩu không đúng!";
-            }
-        }
-
-        require './views/auth/login.php';
     }
 
     public function register()
@@ -41,51 +16,67 @@ class UserController
         $success = '';
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $name     = $_POST['name'];
-            $email    = $_POST['email'];
-            $password = $_POST['password'];
+            $name     = $_POST['name'] ?? '';
+            $email    = $_POST['email'] ?? '';
+            $password = $_POST['password'] ?? '';
 
-            // Kiểm tra email đã tồn tại chưa
             if ($this->userModel->login($email)) {
-                $error = "Email đã tồn tại!";
+                $error = "Email đã tồn tại.";
             } else {
-                $data = [
+                $ok = $this->userModel->register([
                     'name'     => $name,
                     'email'    => $email,
-                    'password' => $password, // Không mã hóa
-                    'role'     => 'user'
-                ];
-                $result = $this->userModel->register($data);
-                if ($result) {
+                    'password' => $password
+                ]);
+
+                if ($ok) {
                     $success = "Đăng ký thành công! Mời bạn đăng nhập.";
                 } else {
-                    $error = "Lỗi khi đăng ký!";
+                    $error = "Đăng ký thất bại!";
                 }
             }
         }
 
-        require './views/auth/register.php';
+        require_once 'views/auth/register.php';
+    }
+
+    public function login()
+    {
+        $error = '';
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
+            $email    = $_POST['email'];
+            $password = $_POST['password'];
+
+            $user = $this->userModel->login($email);
+
+            if ($user && $user['password'] === $password) {
+                $_SESSION['user'] = $user;
+                header('Location: index.php');
+                exit;
+            } else {
+                $error = "Sai email hoặc mật khẩu.";
+            }
+        }
+
+        require_once 'views/auth/login.php';
     }
 
     public function logout()
     {
         unset($_SESSION['user']);
         session_destroy();
-        header('Location: index.php');
-        exit;
+        header("Location: index.php");
     }
+
     public function detail()
-{
-    $id = $_GET['id'] ?? null;
-    if ($id) {
-        $user = $this->userModel->findById($id);
-        if ($user) {
-            require './views/user/detail.php';
-        } else {
-            echo "Không tìm thấy user với ID = $id!";
+    {
+        if (!isset($_SESSION['user'])) {
+            echo "Bạn cần đăng nhập để xem thông tin.";
+            return;
         }
-    } else {
-        echo "ID user không hợp lệ!";
+
+        $user = $this->userModel->findById($_SESSION['user']['id']);
+        require_once 'views/user/detail.php'; // nếu có
     }
-}
 }

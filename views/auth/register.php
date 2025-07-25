@@ -13,7 +13,7 @@
     <p style="color: green;"><?= $success ?></p>
 <?php endif; ?>
 
-<form method="POST" action="">
+<form method="POST" action="index.php?action=register_post">
     <p>Họ tên:</p>
     <input type="text" name="name" placeholder="Họ tên" required>
     <p>Email:</p>
@@ -23,6 +23,6 @@
     <button type="submit">Đăng ký</button>
 </form>
 
-<p>Đã có tài khoản? <a href="index.php?page=login">Đăng nhập</a></p>
+<p>Đã có tài khoản? <a href="index.php?action=login">Đăng nhập</a></p>
 
 <?php require_once 'views/layouts/footer.php'; ?>

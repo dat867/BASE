@@ -1,6 +1,6 @@
-  <header>
-        <img src="uploads/imgproduct/logo.jpg" alt="" height="50px">
-    </header>
+<header>
+    <img src="uploads/imgproduct/logo.jpg" alt="" height="50px">
+</header>
 <?php require_once 'views/layouts/header.php'; ?>
 
 <h2>Sửa sản phẩm</h2>
@@ -23,15 +23,16 @@
     <label>Đổi hình ảnh (nếu có):</label><br>
     <input type="file" name="image" accept="image/*"><br><br>
 
-    <button type="submit" name="update_product">Cập nhật</button>
     <label>Danh mục:</label><br>
     <select name="category_id" required>
-    <?php foreach ($categories as $cat): ?>
-        <option value="<?= $cat['id'] ?>" <?= $cat['id'] == $product['category_id'] ? 'selected' : '' ?>>
-            <?= $cat['name'] ?>
-        </option>
-    <?php endforeach; ?>
-</select><br><br>
+        <?php foreach ($categories as $cat): ?>
+            <option value="<?= $cat['id'] ?>" <?= $cat['id'] == $product['category_id'] ? 'selected' : '' ?>>
+                <?= htmlspecialchars($cat['name']) ?>
+            </option>
+        <?php endforeach; ?>
+    </select><br><br>
+
+    <button type="submit" name="update_product">Cập nhật</button>
 </form>
 
 <?php require_once 'views/layouts/footer.php'; ?>
