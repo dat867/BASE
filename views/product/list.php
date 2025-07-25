@@ -30,10 +30,25 @@
     </style>
 </head>
 <body>
-       <header>
-        <img src="uploads/imgproduct/logo.jpg" alt="" height="50px">
+
+    <header>
+        <img src="uploads/imgproduct/logo.jpg" alt="Logo" height="50px">
     </header>
+
     <?php require_once __DIR__ . '/../layouts/header.php'; ?>
+
+    <div style="display: flex; justify-content: flex-end; padding: 10px 50px;">
+        <form method="GET" action="index.php" style="display: flex;">
+            <input type="hidden" name="action" value="product">
+            <input type="text" name="keyword" placeholder="Tìm sản phẩm..." 
+                   value="<?= htmlspecialchars($_GET['keyword'] ?? '') ?>" 
+                   style="padding: 8px; border: 1px solid #ccc; border-radius: 4px 0 0 4px;">
+            <button type="submit" 
+                    style="padding: 8px 12px; background: #333; color: white; border: none; border-radius: 0 4px 4px 0;">
+                Tìm
+            </button>
+        </form>
+    </div>
 
     <h2>Sản phẩm của cửa hàng</h2>
 
@@ -41,8 +56,9 @@
         <?php if (!empty($products)) : ?>
             <?php foreach ($products as $item): ?>
                 <div class="product">
-                    <img src="./uploads/imgproduct/<?= $item['image'] ?>" alt="<?= $item['name'] ?>">
-                    <h3><?= $item['name'] ?></h3>
+                    <img src="uploads/imgproduct/<?= htmlspecialchars($item['image']) ?>" 
+                         alt="<?= htmlspecialchars($item['name']) ?>">
+                    <h3><?= htmlspecialchars($item['name']) ?></h3>
                     <p class="price"><?= number_format($item['price'], 0, ',', '.') ?>đ</p>
                     <a href="index.php?action=product-detail&id=<?= $item['id'] ?>">Xem chi tiết</a>
                 </div>

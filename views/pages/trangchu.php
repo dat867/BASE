@@ -62,6 +62,13 @@
     <header>
         <img src="uploads/imgproduct/logo.jpg" alt="" height="50px">
     </header>
+        <div style="display: flex; justify-content: flex-end; padding: 10px 50px;">
+    <form method="GET" action="index.php" style="display: flex;">
+        <input type="hidden" name="action" value="product">
+        <input type="text" name="keyword" placeholder="Tìm sản phẩm..." value="<?= $_GET['keyword'] ?? '' ?>" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px 0 0 4px;">
+        <button type="submit" style="padding: 8px 12px; background: #333; color: white; border: none; border-radius: 0 4px 4px 0;">Tìm</button>
+    </form>
+</div>
 
     <?php
 require_once __DIR__ . '/../../models/ProductModel.php';

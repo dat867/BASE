@@ -18,20 +18,17 @@
         <th>Hành động</th>
     </tr>
 
+    <div style="display: flex; flex-wrap: wrap; gap: 20px;">
     <?php foreach ($products as $product): ?>
-        <tr>
-            <td><?= htmlspecialchars($product['id']) ?></td>
-            <td><?= htmlspecialchars($product['name']) ?></td>
-            <td><?= htmlspecialchars($product['price']) ?></td>
-            <td><img src="uploads/imgproduct/<?= htmlspecialchars($product['image']) ?>" width="50" alt=""></td>
-            <td><?= htmlspecialchars($product['description']) ?></td>
-            <td><?= htmlspecialchars($product['category_name'] ?? 'Chưa có') ?></td>
-            <td>
-                <a href="index.php?action=admin_product_edit&id=<?= $product['id'] ?>">Sửa</a> | 
-                <a href="index.php?action=admin_product_delete&id=<?= $product['id'] ?>" onclick="return confirm('Bạn có chắc chắn muốn xóa?')">Xóa</a>
-            </td>
-        </tr>
+        <div style="width: 220px; border: 1px solid #ccc; padding: 10px; border-radius: 10px; text-align: center;">
+            <img src="<?= $product['image'] ?>" alt="<?= $product['name'] ?>" 
+                 style="width: 200px; height: 200px; object-fit: cover; border-radius: 8px;">
+            <h3><?= $product['name'] ?></h3>
+            <p><?= number_format($product['price']) ?>đ</p>
+            <a href="index.php?action=product_detail&id=<?= $product['id'] ?>">Xem chi tiết</a>
+        </div>
     <?php endforeach; ?>
+</div>
 </table>
 
 <?php require_once 'views/layouts/footer.php'; ?>
