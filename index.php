@@ -161,14 +161,23 @@ switch ($action) {
     break;
 
     case 'profile':
-    require 'views/auth/profile.php';
+    require_once 'views/auth/profile.php';
     break;
 
     case 'update-profile':
-    require 'controllers/AuthController.php';
+    require_once 'controllers/AuthController.php';
     (new AuthController)->updateProfile();
     break;
+    
+    case 'add_comment':
+    require_once 'controllers/ProductController.php';
+    (new ProductController)->addComment();
+    break;
 
+    case 'delete_comment':
+    require_once 'controllers/ProductController.php';
+    (new ProductController)->deleteComment();
+    break;
 
     default:
         echo "<h1>404 - Không tìm thấy trang</h1>";
