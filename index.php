@@ -1,26 +1,26 @@
 <?php
 session_start();
 
-// --- Require các file cấu hình ---
+//Require các file cấu hình
 require_once 'commons/env.php';
 require_once 'commons/function.php';
 
-// --- Require tất cả controller cần thiết ---
+//Require tất cả controller cần thiết
 require_once 'controllers/ProductController.php';
 require_once 'controllers/UserController.php';
 require_once 'controllers/CategoryController.php';
 
-// --- Khởi tạo Controller ---
+//Khởi tạo Controller
 $productController = new ProductController();
 $userController    = new UserController();
 $categoryController = new CategoryController();
 
-// --- Lấy action từ URL ---
+//Lấy action từ URL
 $action = $_GET['action'] ?? '';
 
-// --- Điều hướng ---
+//Điều hướng
 switch ($action) {
-    // ----------- TRANG NGƯỜI DÙNG -----------
+    //TRANG NGƯỜI DÙNG
     case '':
     case 'home':
         require_once 'views/pages/trangchu.php';
@@ -69,13 +69,13 @@ switch ($action) {
         $userController->logout();
         break;
 
-    // ----------- TRANG ADMIN -----------
+    //TRANG ADMIN
     case 'admin_dashboard':
         authCheck();
         require_once 'views/admin/dashboard.php';
         break;
 
-    // --- QUẢN LÝ SẢN PHẨM ---
+    //QUẢN LÝ SẢN PHẨM
     case 'admin_product_list':
         authCheck();
         $productController->adminList();
@@ -106,7 +106,7 @@ switch ($action) {
         $productController->delete();
         break;
 
-    // --- QUẢN LÝ DANH MỤC ---
+    //QUẢN LÝ DANH MỤC
     case 'admin_category_list':
         authCheck();
         $categoryController->list();
@@ -137,7 +137,7 @@ switch ($action) {
         $categoryController->delete();
         break;
 
-    // --- ĐẶT HÀNG ---
+    //ĐẶT HÀNG
     case 'order_form':
         require_once 'views/product/order-form.php';
         break;
@@ -156,7 +156,7 @@ switch ($action) {
     case 'user_detail':
     $userController->detail();
     break;
-    case 'product-detail': // Nếu dùng URL có dấu gạch ngang
+    case 'product-detail':
     $productController->detail();
     break;
 
