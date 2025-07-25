@@ -160,6 +160,16 @@ switch ($action) {
     $productController->detail();
     break;
 
+    case 'profile':
+    require 'views/auth/profile.php';
+    break;
+
+    case 'update-profile':
+    require 'controllers/AuthController.php';
+    (new AuthController)->updateProfile();
+    break;
+
+
     default:
         echo "<h1>404 - Không tìm thấy trang</h1>";
         break;

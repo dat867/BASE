@@ -33,9 +33,16 @@ class UserModel
     }
     public function findById($id)
 {
-    $stmt = $this->conn->prepare("SELECT * FROM users WHERE id = ?");
+    $stmt = $this->conn->prepare("SELECT * FROM user WHERE id = ?");
     $stmt->execute([$id]);
     return $stmt->fetch();
 }
+    public function updateUser($id, $name, $email, $password)
+{
+    $sql = "UPDATE user SET name = ?, email = ?, password = ? WHERE id = ?";
+    $stmt = $this->conn->prepare($sql);
+    return $stmt->execute([$name, $email, $password, $id]);
+}
+
 
 }

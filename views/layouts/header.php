@@ -43,11 +43,14 @@
     <a href="<?= BASE_URL ?>index.php?action=product">Sản phẩm</a>
     <a href="<?= BASE_URL ?>index.php?action=about">Giới thiệu</a>
     <a href="<?= BASE_URL ?>index.php?action=contact">Liên hệ</a>
+
     <?php if (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'admin'): ?>
         | <a href="index.php?action=admin_dashboard">Quản trị</a>
     <?php endif; ?>
 
-    <?php if (!isset($_SESSION['user'])): ?>
+    <?php if (isset($_SESSION['user'])): ?>
+        <a href="<?= BASE_URL ?>index.php?action=profile">Thông tin tài khoản</a>
+    <?php else: ?>
         <a href="<?= BASE_URL ?>index.php?action=login">Đăng nhập</a>
         <a href="<?= BASE_URL ?>index.php?action=register">Đăng ký</a>
     <?php endif; ?>
