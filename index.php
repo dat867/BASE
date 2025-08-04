@@ -10,6 +10,7 @@ require_once 'controllers/ProductController.php';
 require_once 'controllers/UserController.php';
 require_once 'controllers/CategoryController.php';
 
+
 //Khởi tạo Controller
 $productController = new ProductController();
 $userController    = new UserController();
@@ -178,6 +179,17 @@ switch ($action) {
     require_once 'controllers/ProductController.php';
     (new ProductController)->deleteComment();
     break;
+
+    case 'admin_user_list':
+    authCheck();
+    $userController->adminList();
+    break;
+
+    case 'admin_user_delete':
+    authCheck();
+    $userController->deleteUser();
+    break;
+
 
     default:
         echo "<h1>404 - Không tìm thấy trang</h1>";

@@ -17,7 +17,7 @@ class UserModel
         'name'     => $data['name'],
         'email'    => $data['email'],
         'password' => $data['password'],
-        'role'     => $data['role'] ?? 'user',
+        'role' => isset($data['role']) && $data['role'] == 1 ? 1 : 0,
         'active'   => 1,
         'image'    => '' // hoặc NULL nếu cột cho phép NULL
     ]);
@@ -42,6 +42,17 @@ class UserModel
     $sql = "UPDATE user SET name = ?, email = ?, password = ? WHERE id = ?";
     $stmt = $this->conn->prepare($sql);
     return $stmt->execute([$name, $email, $password, $id]);
+}
+
+public function getAllUsers() {
+    $stmt = $this->conn->prepare("SELECT * FROM user ORDER BY id DESC");
+    $stmt->execute();
+    return $stmt->fetchAll();
+}
+
+public function deleteUserById($id) {
+    $stmt = $this->conn->prepare("DELETE FROM user WHERE id = ?");
+    return $stmt->execute([$id]);
 }
 
 
