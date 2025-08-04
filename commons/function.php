@@ -18,14 +18,16 @@ function connectDB() {
 
 function uploadFile($file, $folderSave){
     $file_upload = $file;
-    $pathStorage = $folderSave . rand(10000, 99999) . $file_upload['name'];
+    $filename = rand(10000, 99999) . $file_upload['name'];
+    $pathStorage = $folderSave . $filename;
     $tmp_file = $file_upload['tmp_name'];
     $pathSave = PATH_ROOT . $pathStorage;
     if (move_uploaded_file($tmp_file, $pathSave)) {
-        return $pathStorage;
+        return $filename;  
     }
     return null;
 }
+
 
 function deleteFile($file){
     $pathDelete = PATH_ROOT . $file;

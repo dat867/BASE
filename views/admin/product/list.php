@@ -63,8 +63,7 @@
                     <td><?= htmlspecialchars($product['name']) ?></td>
                     <td><?= number_format($product['price']) ?>đ</td>
                     <td>
-                        <img src="uploads/imgproduct/<?= htmlspecialchars($product['image']) ?>" 
-                             alt="<?= htmlspecialchars($product['name']) ?>">
+                       <img src="uploads/imgproduct/<?= htmlspecialchars($product['image']) ?>" alt="<?= htmlspecialchars($product['name']) ?>">
                     </td>
                     <td><?= htmlspecialchars($product['description']) ?></td>
                     <td><?= htmlspecialchars($product['category_name']) ?></td>

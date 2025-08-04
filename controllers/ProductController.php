@@ -116,7 +116,7 @@ class ProductController
     $id = $_POST['id'];
     $price = $_POST['price'];
 
-    // 👉 Kiểm tra giá tiền hợp lệ
+   
     if (!is_numeric($price) || $price < 0) {
         $error = "Giá sản phẩm phải là số và không được âm!";
         $product = $this->productModel->findById($id);
