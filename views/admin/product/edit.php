@@ -4,6 +4,11 @@
 <?php require_once 'views/layouts/header.php'; ?>
 
 <h2>Sửa sản phẩm</h2>
+
+<?php if (!empty($error)) : ?>
+    <p style="color: red;"><?= $error ?></p>
+<?php endif; ?>
+
 <form action="index.php?action=admin_product_update" method="post" enctype="multipart/form-data">
     <input type="hidden" name="id" value="<?= $product['id'] ?>">
     <input type="hidden" name="old_image" value="<?= $product['image'] ?>">
@@ -12,7 +17,7 @@
     <input type="text" name="name" value="<?= htmlspecialchars($product['name']) ?>" required><br><br>
 
     <label>Giá:</label><br>
-    <input type="number" name="price" value="<?= $product['price'] ?>" required><br><br>
+    <input type="number" name="price" value="<?= $product['price'] ?>" required min="0"><br><br>
 
     <label>Mô tả:</label><br>
     <textarea name="description" required><?= htmlspecialchars($product['description']) ?></textarea><br><br>

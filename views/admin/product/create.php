@@ -4,12 +4,17 @@
 <?php require_once 'views/layouts/header.php'; ?>
 
 <h2>Thêm sản phẩm</h2>
+
+<?php if (!empty($error)) : ?>
+    <p style="color: red;"><?= $error ?></p>
+<?php endif; ?>
+
 <form method="POST" action="index.php?action=admin_product_store" enctype="multipart/form-data">
     <label>Tên sản phẩm:</label><br>
     <input type="text" name="name" required><br><br>
 
     <label>Giá:</label><br>
-    <input type="number" name="price" required><br><br>
+    <input type="number" name="price" required min="0"><br><br>
 
     <label>Mô tả:</label><br>
     <textarea name="description" required></textarea><br><br>

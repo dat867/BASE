@@ -74,19 +74,30 @@ class ProductController
         require './views/admin/product/create.php';
     }
 
-    public function store()
-    {
-        $data = [
-            'name'        => $_POST['name'],
-            'price'       => $_POST['price'],
-            'description' => $_POST['description'],
-            'category_id' => $_POST['category_id'],
-            'image'       => uploadFile($_FILES['image'], 'uploads/imgproduct/')
-        ];
-        $this->productModel->insert($data);
-        header('Location: index.php?action=admin_product_list');
-        exit;
+   public function store()
+{
+    $price = $_POST['price'];
+
+    if (!is_numeric($price) || $price < 0) {
+        $error = "Giá sản phẩm phải là số và không được âm!";
+        require_once './models/CategoryModel.php';
+        $categoryModel = new CategoryModel();
+        $categories = $categoryModel->getAll();
+        require './views/admin/product/create.php';
+        return;
     }
+
+    $data = [
+        'name'        => $_POST['name'],
+        'price'       => $price,
+        'description' => $_POST['description'],
+        'category_id' => $_POST['category_id'],
+        'image'       => uploadFile($_FILES['image'], 'uploads/imgproduct/')
+    ];
+    $this->productModel->insert($data);
+    header('Location: index.php?action=admin_product_list');
+    exit;
+}
 
     public function edit()
     {
@@ -101,21 +112,34 @@ class ProductController
     }
 
     public function update()
-    {
-        $id = $_POST['id'];
-        $image = $_FILES['image']['name'] ? uploadFile($_FILES['image'], 'uploads/imgproduct/') : $_POST['old_image'];
+{
+    $id = $_POST['id'];
+    $price = $_POST['price'];
 
-        $data = [
-            'name'        => $_POST['name'],
-            'price'       => $_POST['price'],
-            'description' => $_POST['description'],
-            'image'       => $image,
-            'category_id' => $_POST['category_id']
-        ];
-        $this->productModel->update($id, $data);
-        header('Location: index.php?action=admin_product_list');
-        exit;
+    // 👉 Kiểm tra giá tiền hợp lệ
+    if (!is_numeric($price) || $price < 0) {
+        $error = "Giá sản phẩm phải là số và không được âm!";
+        $product = $this->productModel->findById($id);
+        require_once './models/CategoryModel.php';
+        $categoryModel = new CategoryModel();
+        $categories = $categoryModel->getAll();
+        require './views/admin/product/edit.php';
+        return;
     }
+
+    $image = $_FILES['image']['name'] ? uploadFile($_FILES['image'], 'uploads/imgproduct/') : $_POST['old_image'];
+
+    $data = [
+        'name'        => $_POST['name'],
+        'price'       => $price,
+        'description' => $_POST['description'],
+        'image'       => $image,
+        'category_id' => $_POST['category_id']
+    ];
+    $this->productModel->update($id, $data);
+    header('Location: index.php?action=admin_product_list');
+    exit;
+}
 
     public function delete()
     {
