@@ -44,9 +44,11 @@
     <a href="<?= BASE_URL ?>index.php?action=about">Giới thiệu</a>
     <a href="<?= BASE_URL ?>index.php?action=contact">Liên hệ</a>
 
-    <?php if (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'admin'): ?>
-        | <a href="index.php?action=admin_dashboard">Quản trị</a>
+   <?php if (isset($_SESSION['user']) && $_SESSION['user']['role'] == 1): ?>
+    <a href="index.php?action=admin_dashboard">Quản trị</a>
     <?php endif; ?>
+
+
 
     <?php if (isset($_SESSION['user'])): ?>
         <a href="<?= BASE_URL ?>index.php?action=profile">Thông tin tài khoản</a>

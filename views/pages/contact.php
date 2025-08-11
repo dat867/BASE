@@ -31,11 +31,20 @@
             border-radius: 6px;
             cursor: pointer;
         }
+        #email-error {
+            color: red;
+            font-size: 14px;
+            margin-top: -5px;
+            display: block;
+        }
     </style>
 </head>
-   <header>
-        <img src="uploads/imgproduct/logo.jpg" alt="" height="50px">
-    </header>
+<body>
+
+<header>
+    <img src="uploads/imgproduct/logo.jpg" alt="" height="50px">
+</header>
+
 <?php require_once __DIR__ . '/../layouts/header.php'; ?>
 
 <div style="max-width:600px; margin: 50px auto; border:1px solid #ccc; padding:30px; border-radius:10px;">
@@ -47,21 +56,38 @@
         </div>
     <?php endif; ?>
 
-    <form method="post" action="index.php?action=contact">
+    <form id="contactForm" method="post" action="index.php?action=contact">
         <label>Họ tên:</label><br>
-        <input type="text" name="name" required style="width:100%; padding:8px; margin:10px 0;"><br>
+        <input type="text" name="name" required><br>
 
         <label>Email:</label><br>
-        <input type="email" name="email" required style="width:100%; padding:8px; margin:10px 0;"><br>
+        <input type="text" id="email" name="email" placeholder="Nhập email của bạn" required>
+        <span id="email-error"></span>
 
         <label>Nội dung:</label><br>
-        <textarea name="message" required rows="4" style="width:100%; padding:8px; margin:10px 0;"></textarea><br>
+        <textarea name="message" required rows="4"></textarea><br>
 
-        <button type="submit" style="background:#007bff; color:#fff; padding:10px 20px; border:none; border-radius:5px;">Gửi liên hệ</button>
+        <button type="submit">Gửi liên hệ</button>
     </form>
 </div>
 
 <?php require_once __DIR__ . '/../layouts/footer.php'; ?>
 
-<?php require_once __DIR__ . '/../layouts/footer.php'; ?>
+<script>
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+    const emailInput = document.getElementById('email').value.trim();
+    const emailError = document.getElementById('email-error');
+
+    const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+    if (!regex.test(emailInput)) {
+        e.preventDefault(); 
+        emailError.textContent = "Vui lòng nhập email hợp lệ (vd: ten@example.com)";
+    } else {
+        emailError.textContent = "";
+    }
+});
+</script>
+
+</body>
 </html>

@@ -148,7 +148,7 @@ class ProductController
         header('Location: index.php?action=admin_product_list');
         exit;
     }
- public function deleteComment()
+public function deleteComment()
 {
     if (!isset($_GET['id']) || !isset($_SESSION['user'])) {
         route('');
@@ -164,11 +164,10 @@ class ProductController
     $userId = $_SESSION['user']['id'];
     $userRole = $_SESSION['user']['role'];
 
-    
-    if ($comment['iduser'] == $userId || $userRole == 'admin') {
+    if ($comment['iduser'] == $userId || $userRole == 1) {
         $this->commentModel->delete($commentId);
     }
-
+   
     $productId = $comment['idproduct'];
     route("product_detail&id=" . $productId);
 }

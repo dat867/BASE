@@ -43,7 +43,9 @@ function route($page)
 
 function authCheck()
 {
-    if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'admin') {
-        route('');
+    if (!isset($_SESSION['user']) || $_SESSION['user']['role'] != 1) {
+        header("Location: index.php?action=login");
+        exit;
     }
 }
+

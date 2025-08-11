@@ -119,7 +119,7 @@
                 <strong><?= htmlspecialchars($c['name']) ?></strong> (<?= $c['date'] ?>):
                 <p><?= nl2br(htmlspecialchars($c['content'])) ?></p>
 
-                <?php if (isset($_SESSION['user']) && ($_SESSION['user']['id'] == $c['iduser'] || $_SESSION['user']['role'] == 'admin')): ?>
+                <?php if (isset($_SESSION['user']) && ($_SESSION['user']['id'] == $c['iduser'] || $_SESSION['user']['role'] == '1')): ?>
                     <form action="index.php" method="get" onsubmit="return confirm('Bạn có chắc muốn xoá bình luận này?');">
                         <input type="hidden" name="action" value="delete_comment">
                         <input type="hidden" name="id" value="<?= $c['id'] ?>">
